@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<section id="showcase-inner" class="py-5 text-white">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h1 class="display-4">Browse Our Leads</h1>
+        <p class="lead">Leads collected for this month</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'index' %}">
+            <i class="fas fa-home"></i> Home</a>
+        </li>
+        <li class="breadcrumb-item active"> Browse Leads</li>
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<!-- Listings -->
+<section id="listings" class="py-4">
+  <div class="container">
+    <div class="row">
+
+      {% if leads %}
+      {% for lead in leads %}
+
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card listing-preview">
+          {% if lead.lead_image %}
+          <img class="card-img-top" src= {{ lead.lead_image.url }} alt="">
+          {% endif %}
+          <div class="card-img-overlay">
+            <h5>
+              <span class="badge badge-secondary text-white"> {{ lead.enquired_for }}</span>
+            </h5>
+          </div>
+          
+          <div class="card-body">
+            <div class="listing-heading text-center">
+              <h4 class="text-primary" style="float: top">{{ lead.lead_name }}</h4>
+              <p>
+                <i class="fas fa-map-marker text-secondary"></i> {{ lead.location }}</p>
+            </div>
+            <hr>
+            <div class="row py-2 text-secondary">
+              <div class="col-6">
+                <i class="fa fa-calendar" aria-hidden="true"></i> Passout: <span id="leaddetail" style="color:#2980b9"> {{ lead.Year_of_passing }}</span></div>
+              <div class="col-6">
+                <i  class="fa fa-dot-circle" aria-hidden="true"></i><span id="leaddetail" style="color:#2980b9"> {{ lead.status }} </span></div>
+            </div>
+            <div class="row py-2 text-secondary">
+              <div class="col-6">
+                <i class="fa fa-calendar" aria-hidden="true"></i> Followup on: <span id="leaddetail" style="color:#2980b9"> {{lead.next_follow_up_date}} </span></div>
+              <div class="col-6">
+                <i class="fa fa-phone" aria-hidden="true"></i> Phone: <span id="leaddetail" style="color:#2980b9"> {{ lead.lead_phone }}</span></div>
+            </div>
+            <hr>
+            <div class="row py-2 text-secondary">
+              <div class="col-12">
+                <i class="fas fa-user"></i> {{ lead.assigned_to }}</div>
+            </div>
+            <div class="row text-secondary pb-2">
+              <div class="col-12">
+                <i class="fas fa-clock"></i> {{lead.generation_at|naturaltime}}</div>
+            </div>
+            <hr>
+            <a href="{% url 'single_lead' lead.id %}" class="btn btn-primary btn-block">More info</a>
+            <a href="{% url 'admin:leads_lead_change' lead.id %}" class="btn btn-primary btn-block">Add Report</a>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+        
+      {% else %}
+        <div class="col-md-12">
+          <p style="text-align: center; background-color:azure;">No Leads Available</p>
+        </div>
+      {% endif %}
+
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card listing-preview">
+          <!-- <img class="card-img-top" src= {{ lead.student_image }} alt=""> -->
+          <!-- "{% static 'img/homes/home-1.jpg' %}" -->
+          <div class="card-body">
+            <div class="listing-heading text-center"> 
+              <a href="{% url 'admin:leads_lead_add'  %}">
+              <h4 class="text-primary">Add New Lead</h4>
+              </a>              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+
+<div class="row">
+  <div class="col-md-12">
+<!-- previous -->
+    {% if leads.has_other_pages %}
+    <ul class="pagination">
+      {% if leads.has_previous %}
+        <li class="page-item">
+          <a href="?page={{leads.previous_page_number}}" class="page-link">&laquo;</a>
+        </li>
+      {% else %}
+      <li class="page-item disabled">
+          <a class="page-link">&laquo;</a>
+      </li>
+      {% endif %}
+<!-- all pages nums -->
+      {% for i in leads.paginator.page_range %}
+        {% if leads.number == i %}
+          <li class="page-item active">
+            <a href="" class="page-link">{{i}}</a>
+          </li>
+        {% else %}
+        <li class="page-item">
+          <a href="?page={{i}}" class="page-link">{{i}}</a>
+        </li>
+        {% endif %}
+      {% endfor %}
+<!-- next -->
+      {% if leads.has_next %}
+        <li class="page-item">
+          <a href="?page={{leads.next_page_number}}" class="page-link">&raquo;</a>
+        </li>
+      {% else %}
+      <li class="page-item disabled">
+          <a class="page-link">&raquo;</a>
+      </li>
+      {% endif %}
+
+    </ul>
+    {% endif %}
+  </div>
+</div>
+</div>
+</section>
+
+{% endblock %}

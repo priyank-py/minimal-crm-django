@@ -1,0 +1,66 @@
+
+    <div class="testimonial-section">
+        <div class="inner-width">
+            <h1>What out client says about us</h1>
+            <div class="testimonial-pics">
+                {% if emps %}
+                    {% for emp in emps %}
+                    {% if emp.photo %}
+                        <img src="{{ emp.photo.url }}" alt="test-{{emp.id}}" class="active">
+                    {% endif %}
+                <!-- <img src="https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.wir-badener.at%2Fwp-content%2Fuploads%2F2015%2F01%2Fkeck_alexander-360x360.jpg&f=1" alt="test-{{emp.id}}">
+                <img src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Farchimages-stl.com%2Fwp-content%2Fuploads%2F2015%2F03%2FLUEDLOFF_NICOLE_360x360_COLOR.jpg&f=1" alt="test-{{emp.id}}">
+                <img src="https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Flivedoor.blogimg.jp%2Ftakehirogold%2Fimgs%2Fa%2F6%2Fa67d62f4.jpg&f=1" alt="test-{{emp.id}}"> -->
+                
+                    {% endfor %}
+                    {% endif %}
+            </div>
+
+            <div class="testimonial-contents">
+                <!-- {% with x=1 %}   -->
+                {% if emps %}
+                {% for emp in emps %}
+                
+                {% if emp.index == 0 %}
+
+                    <div class="testimonial active" id="test-{{emp.id}}">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus, similique ducimus excepturi hic odio reprehenderit sapiente, quae nisi eius, quasi neque optio non aperiam distinctio aut repellat vel inventore. Sapiente?</p>
+                        <span class="description">{{emp.name}} / {{emp.postion}}</span>
+                    </div>
+
+                    
+                {% else %}
+                    
+               
+                
+                    <div class="testimonial" id="test-{{emp.id}}">
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus, similique ducimus excepturi hic odio reprehenderit sapiente, quae nisi eius, quasi neque optio non aperiam distinctio aut repellat vel inventore. Sapiente?</p>
+                        <span class="description">{{emp.name}} / {{emp.postion}}</span>
+                    </div>
+
+                {% endif %}
+
+                {% endfor %}
+
+                {% endif %}
+
+
+               
+                {% endwith %}
+
+       
+            </div>
+
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $( ".testimonial-pics img").click(function(){
+            $(".testimonial-pics img").removeClass("active");
+            $(this).addClass("active");
+
+            $(".testimonial").removeClass("active");
+            $("#"+$(this).attr("alt")).addClass("active")
+        });
+    </script>

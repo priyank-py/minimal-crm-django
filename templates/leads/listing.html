@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4">{{lead.lead_name}}</h1>
+          <p class="lead">
+            <i class="fas fa-map-marker"></i> {{lead.location}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href=" {% url 'index' %} ">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href=" {% url 'all_leads' %} ">Leads</a>
+          </li>
+          <li class="breadcrumb-item active">{{ lead.lead_id }}</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Listing -->
+  <section id="listing" class="py-4">
+    <div class="container">
+      <a href="{% url 'all_leads' %}" class="btn btn-light mb-4">Back To Leads</a>
+      <div class="row">
+        <div class="col-md-9">
+          <!-- Home Main Image -->
+          {% if lead.lead_image %}
+          <img src="{{lead.lead_image.url}}" alt="" class="img-main img-fluid mb-3">
+          {% endif %}
+          <!-- Thumbnails -->
+          <!-- <div class="row mb-5 thumbs">
+            <div class="col-md-2">
+              <a href="assets/img/homes/home-inside-1.jpg" data-lightbox="home-images">
+                <img src="assets/img/homes/home-inside-1.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+            <div class="col-md-2">
+              <a href="assets/img/homes/home-inside-2.jpg" data-lightbox="home-images">
+                <img src="assets/img/homes/home-inside-2.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+            <div class="col-md-2">
+              <a href="assets/img/homes/home-inside-3.jpg" data-lightbox="home-images">
+                <img src="assets/img/homes/home-inside-3.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+            <div class="col-md-2">
+              <a href="assets/img/homes/home-inside-4.jpg" data-lightbox="home-images">
+                <img src="assets/img/homes/home-inside-4.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+            <div class="col-md-2">
+              <a href="assets/img/homes/home-inside-5.jpg" data-lightbox="home-images">
+                <img src="assets/img/homes/home-inside-5.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+            <div class="col-md-2">
+              <a href="assets/img/homes/home-inside-6.jpg" data-lightbox="home-images">
+                <img src="assets/img/homes/home-inside-6.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div> -->
+          <!-- Fields -->
+          <div class="row mb-5 fields">
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item text-secondary">
+                  <i class="fas fa-money-bill-alt"></i> Course Price:
+                  <span class="float-right">₹ {{lead.course_fee}}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  <i class="fas fa-bed"></i> Enquired For:
+                  <span class="float-right">{{lead.enquired_for}}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  <i class="fas fa-bath"></i> Location:
+                  <span class="float-right">{{lead.location}}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  <i class="fas fa-car"></i> Pass out in:
+                  <span class="float-right">{{lead.Year_of_passing}}
+                  </span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  <i class="fas fa-bed"></i> next follow up:
+                  <span class="float-right">{{lead.next_follow_up_date}}
+                  </span>
+                </li>
+
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item text-secondary">
+                  <i class="fas fa-th-large"></i> Skill:
+                {% if lead.skills_known != 'leads.Lead.None' %}
+                  <span class="float-right">{{lead.skills_known}}</span>
+                {% else %}
+                  <span class="float-right">-</span>
+                {% endif %}
+                </li>
+                <li class="list-group-item text-secondary">
+                  <i class="fas fa-square"></i> Highest Qualification:
+                  <span class="float-right">{{lead.highest_qualification}}
+                  </span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  <i class="fas fa-calendar"></i> Generation Date:
+                  <span class="float-right">{{lead.generation_at}}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  <i class="fas fa-bed"></i> Counselor:
+                  <span class="float-right">{{lead.assigned_to}}
+                  </span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  <i class="fas fa-bed"></i> Status:
+                  <span class="float-right">{{lead.status}}
+                  </span>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="row mb-5" style="background-color: #eef5db; border: 2px solid; border-radius:5px;padding:4px;">
+            <div class="col-md-12">
+              Campaign-remarks: {{lead.campaign_remarks}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card mb-3">
+          {% if lead.assigned_to.photo %}
+            <img class="card-img-top" src="{{lead.assigned_to.photo.url}}" alt="Seller of the month">
+          {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{lead.assigned_to.postion}}</h5>
+              <h6 class="text-secondary">{{ lead.assigned_to}}</h6>
+            </div>
+          </div>
+          <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Make An Inquiry</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inquiry Modal -->
+  <div class="modal fade" id="inquiryModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="property_name" class="col-form-label">Property:</label>
+              <input type="text" name="listing" class="form-control" value="45 Drivewood Cirlce" disabled>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-form-label">Name:</label>
+              <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-form-label">Email:</label>
+              <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="col-form-label">Phone:</label>
+              <input type="text" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="message" class="col-form-label">Message:</label>
+              <textarea name="message" class="form-control"></textarea>
+            </div>
+            <hr>
+            <input type="submit" value="Send" class="btn btn-block btn-secondary">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

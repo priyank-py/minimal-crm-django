@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+<!-- <style>
+    margin-left: 100px;background: #fff;display: inline-block;width:800px;
+</style> -->
+
+
+{% load crispy_forms_tags %}
+{% crispy example_form example_form.helper %}
+
+
+{% block content %}
+<div style="margin-left: 100px;background: #fff;display: inline-block;width:800px;">
+    <div  class="container form-horizontal">
+    {% csrf_token %}
+    {% comment %} {{form | crispy}} {% endcomment %}
+     {% crispy form %}
+    {% comment %} <button type="submit" class="btn btn-success" name="register">Register</button> {% endcomment %}
+
+    </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,245 @@
+{% extends 'dash_base.html' %}
+
+{% block content %}
+
+{% load mptt_tags %}
+
+<div class="content">
+    <div class="container-fluid">
+        <!-- <div class="row">
+            <div class="col-md-4">
+              <div class="card card-chart">
+                <div class="card-header card-header-success">
+                  <div class="container">
+                  <div class="ct-chart" id="dailyrecordChart"></div>
+                </div>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Daily Sales</h4>
+                  <p class="card-category">
+                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> updated 4 minutes ago
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-chart">
+                <div class="card-header card-header-warning">
+ 
+                  <div class="ct-chart" id="website1ViewsChart"></div>
+          
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Leads Registered</h4>
+                  <p class="card-category">Last Campaign Performance</p>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> campaign sent 2 days ago
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-chart">
+                <div class="card-header card-header-danger">
+                  <div class="ct-chart" id="completedTasksChart"></div>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Completed Tasks</h4>
+                  <p class="card-category">Last Campaign Performance</p>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> campaign sent 2 days ago
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="row">
+            
+            <div class="col-md-12">
+              <div class="card card-plain">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title mt-0"> Total Collection </h4>
+                  <p class="card-category"> All leads registered </p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="">
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          Location
+                        </th>
+                        <th>
+                          Course
+                        </th>
+                        <th>
+                          Amount
+                        </th>
+                        <th>
+                          Assigned To
+                        </th>
+
+                      </thead>
+                      <tbody>
+                          {% if registered_leads %}
+                          {% for registered_lead in registered_leads %}
+                        <tr>                          
+                          <td>
+                            {{registered_lead.id}}
+                          </td>
+                          <td>
+                            {{registered_lead.lead_name}}
+                          </td>
+                          <td>
+                            {{registered_lead.location}}
+                          </td>
+                          <td>
+                            {{registered_lead.enquired_for}}
+                          </td>
+                          <td>
+                            {{registered_lead.course_fee}}
+                          </td>
+                          <td>
+                            {{registered_lead.assigned_to}}
+                          </td>
+                        </tr>
+                          {% endfor %}
+                          {% endif %}
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>  
+ 
+    <script>
+      window.addEventListener("load", myInit, true); function myInit(){
+           graphs();
+           graph2();
+           graph3();
+         };
+
+       dataDailySalesChart = {
+           labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+           series: [
+             [99, 17, 7, 17, 23, 18, 99]
+           ]
+         };
+   
+         optionsDailySalesChart = {
+           lineSmooth: Chartist.Interpolation.cardinal({
+             tension: 0
+           }),
+           low: 0,
+           high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+           chartPadding: {
+             top: 0,
+             right: 0,
+             bottom: 0,
+             left: 0
+           },
+         }
+         var dailySalesChart = new Chartist.Line('#dailyrecordChart', dataDailySalesChart, optionsDailySalesChart);
+
+       dataCompletedTasksChart = {
+           labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
+           series: [
+             [230, 750, 450, 300, 280, 240, 200, 190]
+           ]
+         };
+   
+         optionsCompletedTasksChart = {
+           lineSmooth: Chartist.Interpolation.cardinal({
+             tension: 0
+           }),
+           low: 0,
+           high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+           chartPadding: {
+             top: 0,
+             right: 0,
+             bottom: 0,
+             left: 0
+           }
+         }
+   
+         var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
+
+         var dataWebsiteViewsChart = {
+           labels: ['Java', 'Python', 'ML', 'Web', 'DB', 'JS'],
+           series: [
+             [542, 443, 320, 780, 553, 453]
+   
+           ]
+         };
+         var optionsWebsiteViewsChart = {
+           axisX: {
+             showGrid: false
+           },
+           low: 0,
+           high: 1000,
+           chartPadding: {
+             top: 0,
+             right: 5,
+             bottom: 0,
+             left: 0
+           }
+         };
+         var responsiveOptions = [
+           ['screen and (max-width: 640px)', {
+             seriesBarDistance: 5,
+             axisX: {
+               labelInterpolationFnc: function(value) {
+                 return value[0];
+               }
+             }
+           }]
+         ];
+         var websiteViewsChart = Chartist.Bar('#website1ViewsChart', dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
+   
+
+
+       function graphs(){
+         
+   
+         md.startAnimationForLineChart(dailySalesChart);
+       }
+   
+   
+         /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
+   
+         function graph2(){
+
+             
+         // start animation for the Completed Tasks Chart - Line Chart
+         md.startAnimationForLineChart(completedTasksChart);
+       }
+   
+         /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
+         function graph3(){
+                   //start animation for the Emails Subscription Chart
+         md.startAnimationForBarChart(websiteViewsChart);
+         }
+
+        
+     </script>
+
+{% endblock content %}  

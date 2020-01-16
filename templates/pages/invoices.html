@@ -1,0 +1,126 @@
+{% extends 'dash_base.html' %}
+
+{% block content %}
+
+{% load mptt_tags %}
+
+<div class="content">
+    <div class="container-fluid">
+
+    <div class="row">
+            
+            <div class="col-md-12">
+              <div class="card card-plain">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title mt-0"> All Invoices </h4>
+                  <p class="card-category"> Collection of bills and Invoices </p>
+                </div>
+                <div class="card-body">
+                
+                  <div class="table-responsive">
+
+                    <table class="table table-hover">
+                      <thead class="">
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          Location
+                        </th>
+                        <th>
+                          Course
+                        </th>
+                        <th>
+                          Amount
+                        </th>
+                        <th>
+                          Assigned To
+                        </th>
+
+                      </thead>
+                      <tbody>
+                          {% if get_both %}
+                          {% for bills, invoice in get_both %}
+                          
+                        <tr class="breakrow">                     
+                          <td>
+                          <a href=" {% url 'invoice' invoice.id %} ">
+                            {{invoice.invoice_number}}
+                             </a>
+                          </td>
+                          <td>
+                          <a href=" {% url 'invoice' invoice.id %} ">
+                            {{invoice.lead.lead_name}}
+                            </a>
+                          </td>
+                          <td>
+                            {{invoice.lead.location}}
+                          </td>
+                          <td>
+                            {{invoice.lead.enquired_for}}
+                          </td>
+                          <td>
+                            {{invoice.lead.course_fee}}
+                          </td>
+                          <td>
+                            {{registered_lead.assigned_to}}
+                          </td>
+                          <td>
+                            <a class="btn btn-success" href="{% url 'invoice' invoice.id %}">generate <i class="fa fa-external-link"></i></a>
+</button>
+                          </td>
+                         </tr>
+                        {% for bill in bills %} 
+                            <tr class="datarow" style="display:none;background:#ccc;">                    
+                          <td>
+                          <a href=" {% url 'lead_bill' bill.id %} ">
+                            {{bill.bill_number}}
+                             </a>
+                          </td>
+                          <td>
+                          <a href=" {% url 'lead_bill' bill.id %} ">
+                            {{bill.invoice.lead.lead_name}}
+                            </a>
+                          </td>
+                          <td>
+                            {{bill.invoice.lead.location}}
+                          </td>
+                          <td>
+                            {{bill.invoice.lead.enquired_for}}
+                          </td>
+                          <td>
+                            {{bill.recieve_amount}}
+                          </td>
+                          <td>
+                            {{bill.invoice.counselor}}
+                          </td>
+                        </tr>
+                       {% endfor %} 
+                        
+                          {% endfor %}
+                          {% endif %}
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        //collapse and expand section
+
+        $('.breakrow').click(function(){
+          $(this).nextUntil('tr.breakrow').slideToggle(200);
+        });
+      });
+    </script>
+    {% endblock content %} 

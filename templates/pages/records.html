@@ -1,0 +1,164 @@
+{% extends 'dash_base.html' %}
+
+{% block content %}
+
+<div class="content">
+    <div class="container-fluid">
+
+            <div class="col-md-12">
+              <div class="card card-chart">
+                <div class="card-header card-header-warning">
+ 
+                  <div class="ct-chart" id="website1ViewsChart"></div>
+          
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Record Status</h4>
+                  <p class="card-category">Campaign Performance</p>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> campaign sent x days ago
+                  </div>
+                </div>
+              </div>
+            </div>        
+        
+        <form method="post" class="form-group" novalidate>
+            {% csrf_token %}
+          
+            {{ form.non_field_errors }}
+          
+            {{ form.source }}
+          
+            <div class="row">
+            
+                <div class="col-md-12">
+                  <div class="card card-plain">
+                    <div class="card-header card-header-primary">
+                      <h4 class="card-title mt-0"> Total Collection </h4>
+                      <p class="card-category"> All leads registered </p>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-hover">
+                          <thead class="">
+                            {% comment %} <th>
+                                <tr>
+                                    <td> {% endcomment %}
+                                    <th>
+                                {{ form.employee.label_tag }}
+                                    </th>
+                                    {% comment %} </td>
+                                    <td> {% endcomment %}
+                                    <th>
+                                {{ user.username}}
+                                    {% comment %} </td>
+                                    <td> {% endcomment %}
+                                    </th>
+                                    <th>
+                                <h5>Target</h5>
+                                </th>
+                                    {% comment %} </td>
+                                </tr>
+                            </th> {% endcomment %}
+                            </thead>
+                            <tbody>
+                               
+                            {% for target in targets %}
+                                
+                                <tr>
+                                    <td>
+                                        {{ form.mails.label_tag }}
+                                    </td>
+                                    <td>
+                                        {{ form.mails }}
+                                    </td>
+                                    <td>
+                                            {{target.mails}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{ form.messages.label_tag }}
+                                    </td>
+                                    <td>
+                                        {{ form.messages }}
+                                    </td>
+                                    <td>
+                                        {{target.messages}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>                       
+                                        {{ form.calls.label_tag }}
+                                    </td>
+                                    <td>
+                                        {{ form.calls }}
+                                    </td>
+                                    <td>
+                                        {{target.calls}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>                         
+                                        {{ form.online_submissions.label_tag }}
+                                    </td>
+                                    <td>
+                                        {{ form.online_submissions }}
+                                    </td>
+                                    <td>
+                                        {{target.online_submissions}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>                         
+                                        {{ form.follow_ups.label_tag }}
+                                    </td>
+                                    <td>
+                                        {{ form.follow_ups }}
+                                    </td>
+                                    <td>
+                                        {{target.follow_ups}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>                          
+                                        {{ form.submitted_on.label_tag }}
+                                    </td>
+                                    <td>
+                                    
+                                        {{ dt }}
+                                            
+                                    </td>
+                                    <td>
+                                        -
+                                    </td>
+                                </tr>
+                                
+                            
+                                {% endfor %}
+                                 
+                        </tbody>
+                          
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datetimepicker2').datetimepicker({
+                                    locale: 'in'
+                                });
+                            });
+                        </script>
+                          
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <button type="submit">Submit</button>
+          </form>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% load static %}
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+      
+            <div class="container">
+              <h1>
+              <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'img/red18techlogo.png' '80x80' %}"  class="logo" alt="Evolet CRM">
+              </a>
+              </h1>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <ul class="navbar-nav">
+                  <li class="nav-item active mr-3">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                  </li>
+                  <li class="nav-item mr-3">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                  </li>
+                  <li class="nav-item mr-3">
+                    <a class="nav-link" href="{% url 'all_leads' %}">All Leads</a>
+                  </li>
+                  <li class="nav-item mr-3">
+                    <a class="nav-link" href="{% url 'listings' %}">New Leads</a>
+                  </li>
+                </ul>
+        
+                <ul class="navbar-nav ml-auto">
+                  
+                {% if user.is_superuser %}
+                  <li class="nav-item mr-3">
+                    <a class="nav-link" href="{% url 'admin:auth_user_add' %}">
+                      <i class="fas fa-user-plus"></i> register</a>
+                  </li>
+                {% endif %}
+                  <li class="nav-item mr-3">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                      <i class="fas fa-sign-in-alt"></i>
+        
+                      Login</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    
