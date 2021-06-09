@@ -9,7 +9,7 @@ CairoSVG==2.4.2
 cffi==1.12.3
 cssselect2==0.2.2
 defusedxml==0.6.0
-Django==2.2.8
+Django==2.2.22
 django-admin-numeric-filter==0.1.5
 django-admin-rangefilter==0.5.1
 django-js-asset==1.2.2
